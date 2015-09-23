@@ -142,50 +142,6 @@ public class MainActivity extends ListActivity {
     return true;
   }
 
-
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if(1 == requestCode || 2 == requestCode){
-      if(RESULT_OK == resultCode){
-        String action = data.getStringExtra("com.feedhenry.fhandroidexampleapp.action");
-
-        if("save".equalsIgnoreCase(action)){
-          String name = data.getStringExtra("com.feedhenry.fhandroidexampleapp.name");
-          if(1 == requestCode){
-            String uid = data.getStringExtra("com.feedhenry.fhandroidexampleapp.uid");
-            String created = data.getStringExtra("com.feedhenry.fhandroidexampleapp.created");
-            JSONObject updated = new JSONObject();
-            updated.put("name", name);
-            updated.put("created", created);
-            try {
-              syncClient.update(DATAID, uid, updated);
-            } catch (Exception e) {
-              Log.e(TAG, "failed to update data: " + updated.toString(), e);
-            }
-          } else if(2 == requestCode){
-            JSONObject create = new JSONObject();
-            create.put("name", name);
-            create.put("created", new Date().getTime());
-            try{
-              syncClient.create(DATAID, create);
-            } catch(Exception e){
-              Log.e(TAG, "failed to create data: " + create.toString(), e);
-            }
-          }
-
-        } else if("delete".equalsIgnoreCase(action)){
-          String uid = data.getStringExtra("com.feedhenry.fhandroidexampleapp.uid");
-          try{
-            syncClient.delete(DATAID, uid);
-          } catch (Exception e) {
-            Log.e(TAG, "failed to delete data: " + uid, e);
-          }
-        }
-      }
-    }
-  }
-
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     ShoppingItem item = adapter.getItem(position);
