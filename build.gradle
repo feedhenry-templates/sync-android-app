@@ -15,6 +15,6 @@ buildscript {
 allprojects {
   repositories {
     jcenter()
-    maven { url "https://github.com/feedhenry/fh-android-sdk-repository/raw/2.4.0-SNAPSHOT/snapshots" }
+    maven { url "https://github.com/feedhenry/fh-android-sdk-repository/raw/master/snapshots" }
   }
 }
