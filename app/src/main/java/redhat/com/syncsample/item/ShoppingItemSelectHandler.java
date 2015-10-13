@@ -7,9 +7,12 @@
 package redhat.com.syncsample.item;
 
 
+/**
+ * Objects which implement this Handler receive touch select events from ShoppingItem touches
+ */
 public interface ShoppingItemSelectHandler {
 
-    public void shoppingItemSelected(ShoppingItem shoppingItem);
-    public void shoppingItemLongSelected(ShoppingItem shoppingItem);
+    void shoppingItemSelected(ShoppingItem shoppingItem);
+    void shoppingItemLongSelected(ShoppingItem shoppingItem);
 
 }

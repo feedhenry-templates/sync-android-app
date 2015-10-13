@@ -36,6 +36,9 @@ import redhat.com.syncsample.item.ShoppingItem;
 import redhat.com.syncsample.item.ShoppingItemAdapter;
 import redhat.com.syncsample.item.ShoppingItemSelectHandler;
 
+/**
+ * This class sets up synchronization, displays Shopping Items, and sends events to the sync system.
+ */
 public class ListItemsFragment extends Fragment implements ShoppingItemSelectHandler {
 
 

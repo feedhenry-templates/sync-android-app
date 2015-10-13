@@ -9,7 +9,7 @@ package redhat.com.syncsample.item;
 import java.io.Serializable;
 
 /**
- * Created by summers on 10/13/15.
+ * The shopping item is the model item that we are synchonizing.
  */
 public class ShoppingItem implements Serializable {
     private String itemId;

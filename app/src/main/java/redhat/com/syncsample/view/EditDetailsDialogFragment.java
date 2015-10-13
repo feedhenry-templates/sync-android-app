@@ -19,7 +19,7 @@ import redhat.com.syncsample.R;
 import redhat.com.syncsample.item.ShoppingItem;
 
 /**
- * Created by summers on 10/13/15.
+ * This is the Dialog users will use to edit Shopping Items
  */
 public class EditDetailsDialogFragment extends DialogFragment {
 

@@ -21,7 +21,7 @@ import redhat.com.syncsample.R;
 import redhat.com.syncsample.item.ShoppingItem;
 
 /**
- * Created by summers on 10/13/15.
+ * This is the Dialog which users will use to create Shopping Items.
  */
 public class CreateItemDialogFragment extends DialogFragment {
 

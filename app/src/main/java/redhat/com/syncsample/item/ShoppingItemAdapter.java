@@ -18,7 +18,7 @@ import java.util.List;
 import redhat.com.syncsample.R;
 
 /**
- * Created by summers on 10/13/15.
+ * This class maps a List of Shopping Items into a View in a RecyclerView
  */
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder> {
 
