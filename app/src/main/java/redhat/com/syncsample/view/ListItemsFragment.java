@@ -6,8 +6,12 @@
  */
 package redhat.com.syncsample.view;
 
+import android.content.DialogInterface;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,8 +34,9 @@ import java.util.Iterator;
 import redhat.com.syncsample.R;
 import redhat.com.syncsample.item.ShoppingItem;
 import redhat.com.syncsample.item.ShoppingItemAdapter;
+import redhat.com.syncsample.item.ShoppingItemSelectHandler;
 
-public class ListItemsFragment extends Fragment {
+public class ListItemsFragment extends Fragment implements ShoppingItemSelectHandler {
 
 
     private static final String TAG = "FHSyncActivity";
@@ -40,6 +45,7 @@ public class ListItemsFragment extends Fragment {
 
     private RecyclerView list;
     private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
+    private FHSyncClient syncClient;
 
     public ListItemsFragment() {
 
@@ -52,6 +58,16 @@ public class ListItemsFragment extends Fragment {
         list = (RecyclerView) contentView.findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
+        adapter.addShoppingItemSelectHandler(this);
+        FloatingActionButton fab = (FloatingActionButton) contentView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateItemDialogFragment newFragment = CreateItemDialogFragment.newInstance();
+                newFragment.show(getFragmentManager(), "dialog");
+                newFragment.setCreateHandler(ListItemsFragment.this);
+            }
+        });
         return contentView;
     }
 
@@ -77,7 +93,7 @@ public class ListItemsFragment extends Fragment {
 
     private void fireSync() {
 
-        final FHSyncClient syncClient = FHSyncClient.getInstance();
+        this.syncClient = FHSyncClient.getInstance();
 
         //create a new instance of sync config
         FHSyncConfig config = new FHSyncConfig();
@@ -170,4 +186,58 @@ public class ListItemsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void shoppingItemSelected(ShoppingItem shoppingItem) {
+        EditDetailsDialogFragment newFragment = EditDetailsDialogFragment.newInstance(shoppingItem);
+        newFragment.show(getFragmentManager(), "dialog");
+        newFragment.setSaveHandler(this);
+    }
+
+    @Override
+    public void shoppingItemLongSelected(final ShoppingItem shoppingItem) {
+        new AlertDialog.Builder(getActivity()).setTitle(getResources().getString(R.string.delete_dialog_title)).setMessage("Delete Item :" + shoppingItem.getName() + "?")
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteItem(shoppingItem.getId());
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create().show();
+    }
+
+    public void saveItem(ShoppingItem shoppingItem, String newName, String newCreated) {
+        JSONObject updated = new JSONObject();
+        updated.put("name", newName);
+        updated.put("created", newCreated);
+        try {
+            if (syncClient != null) {
+                syncClient.update(DATA_ID, shoppingItem.getId(), updated);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "failed to update data: " + updated.toString(), e);
+        }
+    }
+
+    public void createItem(String newName, String newCreated) {
+        JSONObject create = new JSONObject();
+        create.put("name", newName);
+        create.put("created", newCreated);
+        try{
+            syncClient.create(DATA_ID, create);
+        } catch(Exception e){
+            Log.e(TAG, "failed to create data: " + create.toString(), e);
+        }
+    }
+
+    public void deleteItem(String itemId) {
+        try{
+            syncClient.delete(DATA_ID, itemId);
+        } catch (Exception e) {
+            Log.e(TAG, "failed to delete data: " + itemId, e);
+        }
+    }
 }

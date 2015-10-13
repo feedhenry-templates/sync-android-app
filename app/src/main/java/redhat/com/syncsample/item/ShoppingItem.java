@@ -6,10 +6,12 @@
  */
 package redhat.com.syncsample.item;
 
+import java.io.Serializable;
+
 /**
  * Created by summers on 10/13/15.
  */
-public class ShoppingItem {
+public class ShoppingItem implements Serializable {
     private String itemId;
     private String itemName;
     private String itemCreated;

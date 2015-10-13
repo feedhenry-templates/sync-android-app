@@ -23,6 +23,7 @@ import redhat.com.syncsample.R;
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder> {
 
     private final List<ShoppingItem> items = new ArrayList<>();
+    private ShoppingItemSelectHandler itemSelectHandler = null;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,16 +54,37 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
         items.add(item);
     }
 
+    public void addShoppingItemSelectHandler(ShoppingItemSelectHandler itemSelectHandler) {
+        this.itemSelectHandler = itemSelectHandler;
+    }
+
     @Override
     public int getItemCount() {
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         protected TextView itemNameField;
         public ViewHolder(View itemView) {
             super(itemView);
             itemNameField = (TextView) itemView.findViewById(R.id.item_name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemSelectHandler != null) {
+                        itemSelectHandler.shoppingItemSelected(getShoppingItem(getAdapterPosition()));
+                    }
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (itemSelectHandler != null) {
+                        itemSelectHandler.shoppingItemLongSelected(getShoppingItem(getAdapterPosition()));
+                    }
+                    return true;
+                }
+            });
         }
     }
 }
