@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample;
+package redhat.com.syncsample.view;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -27,10 +27,11 @@ import org.json.fh.JSONObject;
 
 import java.util.Iterator;
 
-import redhat.com.syncsample.items.ShoppingItem;
-import redhat.com.syncsample.items.ShoppingItemAdapter;
+import redhat.com.syncsample.R;
+import redhat.com.syncsample.item.ShoppingItem;
+import redhat.com.syncsample.item.ShoppingItemAdapter;
 
-public class MainActivityFragment extends Fragment {
+public class ListItemsFragment extends Fragment {
 
 
     private static final String TAG = "FHSyncActivity";
@@ -40,7 +41,7 @@ public class MainActivityFragment extends Fragment {
     private RecyclerView list;
     private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
 
-    public MainActivityFragment() {
+    public ListItemsFragment() {
 
     }
 

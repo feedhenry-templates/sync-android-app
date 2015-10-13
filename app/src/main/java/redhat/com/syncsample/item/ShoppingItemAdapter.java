@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample.items;
+package redhat.com.syncsample.item;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
