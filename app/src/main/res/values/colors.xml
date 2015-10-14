@@ -10,5 +10,7 @@
 <resources>
     <color name="redhat_red">#CC0000</color>
     <color name="redhat_dark_red">#781f1c</color>
-    <color name="redhat_accent">#564979</color>
+    <color name="redhat_accent">#007a87</color>
+    <color name="background_white">#f3f3f3</color>
+    <color name="item_underground">#e6e6e6</color>
 </resources>

@@ -8,12 +8,12 @@ package redhat.com.syncsample.view;
 
 import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +30,13 @@ import com.feedhenry.sdk.sync.NotificationMessage;
 import org.json.fh.JSONObject;
 
 import java.util.Iterator;
+import java.util.TreeSet;
 
 import redhat.com.syncsample.R;
 import redhat.com.syncsample.item.ShoppingItem;
 import redhat.com.syncsample.item.ShoppingItemAdapter;
 import redhat.com.syncsample.item.ShoppingItemSelectHandler;
+import redhat.com.syncsample.item.gesturehelper.UncoverDeleteGestureCallback;
 
 /**
  * This class sets up synchronization, displays Shopping Items, and sends events to the sync system.
@@ -62,6 +64,11 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter);
         adapter.addShoppingItemSelectHandler(this);
+
+        UncoverDeleteGestureCallback callback = new UncoverDeleteGestureCallback();
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(list);
+
         FloatingActionButton fab = (FloatingActionButton) contentView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,10 +137,12 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
                 Log.d(TAG, "syncClient - onSyncCompleted");
                 Log.d(TAG, "Sync message: " + pMessage.getMessage());
 
-                adapter.clear();
+
 
                 JSONObject allData = syncClient.list(DATA_ID);
                 Iterator<String> it = allData.keys();
+                TreeSet<ShoppingItem> itemsToSync = new TreeSet<ShoppingItem>();
+
                 while (it.hasNext()) {
                     String key = it.next();
                     JSONObject data = allData.getJSONObject(key);
@@ -141,8 +150,12 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
                     String name = dataObj.optString("name", "NO name");
                     String created = dataObj.optString("created", "no date");
                     ShoppingItem item = new ShoppingItem(key, name, created);
-                    adapter.add(item);
+                    itemsToSync.add(item);
                 }
+
+                adapter.removeMissingItemsFrom(itemsToSync);
+                adapter.addNewItemsFrom(itemsToSync);
+
                 adapter.notifyDataSetChanged();
             }
 
