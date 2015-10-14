@@ -75,7 +75,7 @@ public class ShoppingItem implements Serializable, Comparable<ShoppingItem> {
             }
         }
 
-        return compareResult;
+        return -1 * compareResult;
 
     }
 

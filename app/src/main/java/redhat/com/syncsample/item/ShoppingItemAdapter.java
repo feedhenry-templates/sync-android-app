@@ -10,11 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -47,6 +50,28 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
     public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
         ShoppingItem shoppingItem = getShoppingItem(position);
         holder.itemNameField.setText(shoppingItem.getName());
+        holder.itemIdField.setText(shoppingItem.getId());
+        try {
+            Long time = Long.parseLong(shoppingItem.getCreated());
+            holder.itemDateField.setVisibility(View.VISIBLE);
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR, 0);
+            today.set(Calendar.MINUTE, 0);
+            today.set(Calendar.SECOND, 0);
+            today.set(Calendar.MILLISECOND, 0);
+            Date createdDate = new Date(time);
+
+            if (createdDate.after(today.getTime())) {
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                holder.itemDateField.setText(format.format(createdDate));
+            } else {
+                SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
+                holder.itemDateField.setText(format.format(createdDate));
+            }
+
+        } catch (Exception ignore) {
+            holder.itemDateField.setVisibility(View.GONE);
+        }
     }
 
     public ShoppingItem getShoppingItem(int position) {
@@ -95,14 +120,22 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
     }
 
     public class ShoppingItemViewHolder extends RecyclerView.ViewHolder {
-        protected TextView itemNameField;
-        private View view;
+        protected final TextView itemNameField;
+        protected final TextView itemIdField;
+        protected final TextView itemDateField;
+        protected final ImageButton deleteButton;
+        private final View topLayer;
+        private final View view;
 
         public ShoppingItemViewHolder(View itemView) {
             super(itemView);
             this.view = itemView;
             itemNameField = (TextView) itemView.findViewById(R.id.item_name);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemDateField = (TextView) itemView.findViewById(R.id.item_date);
+            itemIdField = (TextView) itemView.findViewById(R.id.item_id);
+            deleteButton = (ImageButton) view.findViewById(R.id.delete_icon);
+            topLayer = view.findViewById(R.id.top_layer);
+            topLayer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (itemSelectHandler != null) {
@@ -110,23 +143,24 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
                     }
                 }
             });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void onClick(View v) {
                     if (itemSelectHandler != null) {
                         itemSelectHandler.shoppingItemLongSelected(getShoppingItem(getAdapterPosition()));
                     }
-                    return true;
                 }
             });
         }
 
-        public TextView getItemNameField() {
-            return itemNameField;
+        public View getTopLayerView() {
+            return topLayer;
         }
 
         public int getDeleteIconMesauredWidth() {
             return view.findViewById(R.id.delete_icon).getWidth();
         }
+
     }
 }
+

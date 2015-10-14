@@ -4,11 +4,9 @@ import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.util.SparseArray;
 
 import java.util.HashMap;
 
-import redhat.com.syncsample.item.ShoppingItem;
 import redhat.com.syncsample.item.ShoppingItemAdapter;
 
 /**
@@ -64,13 +62,11 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
 
         switch (flags) {
             case ItemTouchHelper.END:
-                Log.d("END", "Flipping to start"+ "name:" + shoppingItemsHolder.getItemNameField().getText());
-                shoppingItemsHolder.getItemNameField().setTranslationX(0);
+                shoppingItemsHolder.getTopLayerView().setTranslationX(0);
                 swipeFlags.put(itemId, ItemTouchHelper.START);
                 break;
             case ItemTouchHelper.START:
-                Log.d("START", "Flipping to end"+ "name:" + shoppingItemsHolder.getItemNameField().getText());
-                shoppingItemsHolder.getItemNameField().setTranslationX(-1 * swipeDistance );
+                shoppingItemsHolder.getTopLayerView().setTranslationX(-1 * swipeDistance );
                 swipeFlags.put(itemId, ItemTouchHelper.END);
                 break;
             default:
@@ -93,7 +89,7 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
             swipeFlags.put(itemId, ItemTouchHelper.START);
         }
 
-        if (!isCurrentlyActive && Math.abs(shoppingItemsHolder.getItemNameField().getTranslationX()) >= swipeDistance) {
+        if (!isCurrentlyActive && Math.abs(shoppingItemsHolder.getTopLayerView().getTranslationX()) >= swipeDistance) {
             return;
         }
 
@@ -101,21 +97,19 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE ) {
             switch (flags) {
                 case ItemTouchHelper.END:
-                    Log.d("END", dX+ ":iscurrentlyActive:" + isCurrentlyActive + "name:" + shoppingItemsHolder.getItemNameField().getText());
                     if (Math.abs(dX) > swipeDistance ) {
-                        shoppingItemsHolder.getItemNameField().setTranslationX(0);
+                        shoppingItemsHolder.getTopLayerView().setTranslationX(0);
                     } else if (dX < 0) {
-                        shoppingItemsHolder.getItemNameField().setTranslationX(-1 * swipeDistance );
+                        shoppingItemsHolder.getTopLayerView().setTranslationX(-1 * swipeDistance);
                     } else {
-                        shoppingItemsHolder.getItemNameField().setTranslationX(-1 * swipeDistance  + dX);
+                        shoppingItemsHolder.getTopLayerView().setTranslationX(-1 * swipeDistance + dX);
                     }
                 break;
                 case ItemTouchHelper.START:
-                    Log.d("START", dX+ ":iscurrentlyActive:" + isCurrentlyActive+ "name:" + shoppingItemsHolder.getItemNameField().getText());
                     if (Math.abs(dX) < swipeDistance ) {
-                        shoppingItemsHolder.getItemNameField().setTranslationX(dX);
+                        shoppingItemsHolder.getTopLayerView().setTranslationX(dX);
                     } else if (dX < 0) {
-                        shoppingItemsHolder.getItemNameField().setTranslationX(-1 * swipeDistance );
+                        shoppingItemsHolder.getTopLayerView().setTranslationX(-1 * swipeDistance);
                     }
                 break;
                 default:
@@ -126,6 +120,6 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
     }
 
     private void calculateSwipeDistance(ShoppingItemAdapter.ShoppingItemViewHolder shoppingItemsHolder) {
-        swipeDistance = 120;
+        swipeDistance = shoppingItemsHolder.getDeleteIconMesauredWidth();;
     }
 }
