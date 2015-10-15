@@ -18,8 +18,6 @@
         android:id="@+id/item_name_label"
         android:layout_alignParentTop="true"
         android:layout_alignBaseline="@+id/item_name_field"
-        android:layout_toLeftOf="@+id/item_id_field"
-        android:layout_toStartOf="@+id/item_id_field"
         />
 
     <EditText
