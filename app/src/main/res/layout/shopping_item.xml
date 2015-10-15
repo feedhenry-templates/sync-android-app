@@ -20,6 +20,7 @@
         android:layout_centerVertical="true"
         android:background="@drawable/abc_btn_borderless_material"
         android:src="@drawable/ic_delete_black_24dp"
+        android:contentDescription="@string/delete"
         android:tint="#6a6a6a" />
 
     <RelativeLayout
