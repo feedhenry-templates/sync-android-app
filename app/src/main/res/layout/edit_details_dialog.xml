@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) 2015 FeedHenry Ltd, All Rights Reserved.
+
+    Please refer to your contract with FeedHenry for the software license agreement.
+    If you do not have a contract, you do not have a license to use this software.
+
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Name"
+        android:id="@+id/item_name_label"
+        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/item_name_field"
+        android:layout_toLeftOf="@+id/item_id_field"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_name_field"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/item_name_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Id"
+        android:id="@+id/item_id_label"
+        android:layout_below="@+id/item_name_field"
+        android:layout_alignBaseline="@+id/item_id_field"
+        android:layout_toStartOf="@+id/item_created_field"
+        android:layout_toLeftOf="@+id/item_created_field" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_id_field"
+        android:layout_below="@+id/item_name_field"
+        android:layout_toRightOf="@+id/item_id_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Created"
+        android:id="@+id/item_created_label"
+        android:layout_alignBaseline="@+id/item_created_field"
+        android:layout_below="@+id/item_id_field"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_created_field"
+        android:layout_below="@+id/item_id_field"
+        android:layout_toRightOf="@+id/item_created_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancel_button"
+        style="@style/ButtonStyle"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/save_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        style="@style/ButtonStyle"
+        android:id="@+id/save_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

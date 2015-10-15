@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) 2015 FeedHenry Ltd, All Rights Reserved.
+
+    Please refer to your contract with FeedHenry for the software license agreement.
+    If you do not have a contract, you do not have a license to use this software.
+
+-->
 <resources>
 
     <string name="app_name">SyncSample</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="sync_demo_title">Sync Demo</string>
+    <string name="edit_dialog_title">Edit Item</string>
+    <string name="create_item_dialog_title">Create Item</string>
+    <string name="delete_dialog_title">Delete Item</string>
 </resources>

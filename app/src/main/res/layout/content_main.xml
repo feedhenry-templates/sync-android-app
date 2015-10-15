@@ -1,0 +1,15 @@
+<!--
+
+    Copyright (c) 2015 FeedHenry Ltd, All Rights Reserved.
+
+    Please refer to your contract with FeedHenry for the software license agreement.
+    If you do not have a contract, you do not have a license to use this software.
+
+-->
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/fragment"
+    android:name="redhat.com.syncsample.view.ListItemsFragment" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:layout="@layout/fragment_main" />

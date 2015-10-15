@@ -1,0 +1,34 @@
+<!--
+
+    Copyright (c) 2015 FeedHenry Ltd, All Rights Reserved.
+
+    Please refer to your contract with FeedHenry for the software license agreement.
+    If you do not have a contract, you do not have a license to use this software.
+
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="redhat.com.syncsample.view.ListItemsFragment"
+    tools:showIn="@layout/chrome_main">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+
+        android:src="@drawable/ic_add_white_24dp" />
+
+</RelativeLayout>
