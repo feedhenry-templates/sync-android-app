@@ -89,7 +89,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
 
     @Override
     public long getItemId(int position) {
-        return items.get(position).hashCode();
+        return items.get(position).getFHhash();
     }
 
     /**
@@ -139,7 +139,9 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
                 @Override
                 public void onClick(View v) {
                     if (itemSelectHandler != null) {
-                        itemSelectHandler.shoppingItemSelected(getShoppingItem(getAdapterPosition()));
+                        if (getAdapterPosition() >= 0) {
+                            itemSelectHandler.shoppingItemSelected(getShoppingItem(getAdapterPosition()));
+                        }
                     }
                 }
             });
@@ -147,7 +149,9 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
                 @Override
                 public void onClick(View v) {
                     if (itemSelectHandler != null) {
-                        itemSelectHandler.shoppingItemLongSelected(getShoppingItem(getAdapterPosition()));
+                        if (getAdapterPosition() >= 0) {
+                            itemSelectHandler.shoppingItemLongSelected(getShoppingItem(getAdapterPosition()));
+                        }
                     }
                 }
             });

@@ -6,6 +6,10 @@
  */
 package redhat.com.syncsample.item;
 
+import com.feedhenry.sdk.sync.FHSyncUtils;
+
+import org.json.fh.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -88,6 +92,18 @@ public class ShoppingItem implements Serializable, Comparable<ShoppingItem> {
             }
         } else {
             return first.compareTo(second);
+        }
+    }
+
+    public long getFHhash() {
+        JSONObject create = new JSONObject();
+        create.put("name", this.itemName);
+        create.put("created", this.itemCreated);
+        try {
+            return FHSyncUtils.generateHash(create.toString()).hashCode();
+        } catch (Exception e) {
+            //TODO : Refactor the sdk code to expose the correct exception
+            throw new RuntimeException(e);
         }
     }
 

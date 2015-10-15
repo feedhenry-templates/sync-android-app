@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 
 import com.feedhenry.sdk.FH;
 import com.feedhenry.sdk.FHActCallback;
+import com.feedhenry.sdk.FHHttpClient;
 import com.feedhenry.sdk.FHResponse;
 import com.feedhenry.sdk.sync.FHSyncClient;
 import com.feedhenry.sdk.sync.FHSyncConfig;
@@ -88,6 +89,7 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
             @Override
             public void success(FHResponse pResponse) {
                 Log.d(TAG, "FH.init - success");
+                FHHttpClient.setTimeout(45*1000);
                 fireSync();
             }
 
@@ -112,6 +114,7 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
         config.setNotifyDeltaReceived(true);
         config.setNotifySyncComplete(true);
         config.setUseCustomSync(false);
+        config.setSyncFrequency(1);
 
         //initialize the sync client
         syncClient.init(getActivity().getApplicationContext(), config, new FHSyncListener() {
