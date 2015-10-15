@@ -10,8 +10,6 @@
 <resources>
 
     <string name="app_name">SyncSample</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="sync_demo_title">Sync Demo</string>
     <string name="edit_dialog_title">Edit Item</string>
     <string name="create_item_dialog_title">Create Item</string>
