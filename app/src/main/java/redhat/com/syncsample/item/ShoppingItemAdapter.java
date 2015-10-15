@@ -51,6 +51,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
         ShoppingItem shoppingItem = getShoppingItem(position);
         holder.itemNameField.setText(shoppingItem.getName());
         holder.itemIdField.setText(shoppingItem.getId());
+        holder.isNew = true;
         try {
             Long time = Long.parseLong(shoppingItem.getCreated());
             holder.itemDateField.setVisibility(View.VISIBLE);
@@ -126,6 +127,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
         protected final ImageButton deleteButton;
         private final View topLayer;
         private final View view;
+        private boolean isNew = true;
 
         public ShoppingItemViewHolder(View itemView) {
             super(itemView);
@@ -155,6 +157,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
                     }
                 }
             });
+
         }
 
         public View getTopLayerView() {
@@ -165,6 +168,13 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
             return view.findViewById(R.id.delete_icon).getWidth();
         }
 
+        public void setNew(boolean isNew) {
+            this.isNew = isNew;
+        }
+
+        public boolean isNew() {
+            return isNew;
+        }
     }
 }
 

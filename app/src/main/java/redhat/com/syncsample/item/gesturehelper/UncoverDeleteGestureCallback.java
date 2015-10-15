@@ -43,6 +43,13 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
         int dragFlags = 0; //no Drag
         ShoppingItemAdapter.ShoppingItemViewHolder shoppingItemsHolder = ((ShoppingItemAdapter.ShoppingItemViewHolder) viewHolder);
         Long itemId = shoppingItemsHolder.getItemId();
+
+        if (shoppingItemsHolder.isNew()) {
+            shoppingItemsHolder.setNew(false);
+            swipeFlags.put(itemId, ItemTouchHelper.START);
+            shoppingItemsHolder.getTopLayerView().setTranslationX(0);
+        }
+
         if (!swipeFlags.containsKey(itemId)) {
             swipeFlags.put(itemId, ItemTouchHelper.START);
         }
@@ -58,12 +65,22 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         ShoppingItemAdapter.ShoppingItemViewHolder shoppingItemsHolder = ((ShoppingItemAdapter.ShoppingItemViewHolder) viewHolder);
         Long itemId = shoppingItemsHolder.getItemId();
+
+        if (shoppingItemsHolder.isNew()) {
+            shoppingItemsHolder.setNew(false);
+            swipeFlags.put(itemId, ItemTouchHelper.START);
+            shoppingItemsHolder.getTopLayerView().setTranslationX(0);
+        }
+
         if (swipeDistance == -1) {
             calculateSwipeDistance(shoppingItemsHolder);
         }
         if (!swipeFlags.containsKey(itemId)) {
             swipeFlags.put(itemId, ItemTouchHelper.START);
         }
+
+
+
         int flags = swipeFlags.get(itemId);
 
         switch (flags) {
@@ -87,6 +104,12 @@ public class UncoverDeleteGestureCallback extends ItemTouchHelper.Callback {
 
         ShoppingItemAdapter.ShoppingItemViewHolder shoppingItemsHolder = ((ShoppingItemAdapter.ShoppingItemViewHolder) viewHolder);
         Long itemId = shoppingItemsHolder.getItemId();
+
+        if (shoppingItemsHolder.isNew()) {
+            shoppingItemsHolder.setNew(false);
+            swipeFlags.put(itemId, ItemTouchHelper.START);
+            shoppingItemsHolder.getTopLayerView().setTranslationX(0);
+        }
 
         if (swipeDistance == -1) {
             calculateSwipeDistance(shoppingItemsHolder);
