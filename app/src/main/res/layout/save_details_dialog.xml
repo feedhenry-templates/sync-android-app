@@ -19,6 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignBaseline="@+id/item_name_field"
         android:layout_toLeftOf="@+id/item_id_field"
+        android:layout_toStartOf="@+id/item_id_field"
         />
 
     <EditText
@@ -27,6 +28,7 @@
         android:id="@+id/item_name_field"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/item_name_label"
+        android:layout_toEndOf="@+id/item_name_label"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -37,7 +39,8 @@
         android:id="@+id/cancel_button"
         style="@style/ButtonStyle"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/save_button"/>
+        android:layout_toLeftOf="@+id/save_button"
+        android:layout_toStartOf="@+id/save_button"/>
 
     <Button
         android:layout_width="wrap_content"
