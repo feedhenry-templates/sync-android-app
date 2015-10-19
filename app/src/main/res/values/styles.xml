@@ -22,14 +22,12 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
-        <item name="android:fontFamily">sans-serif-condensed-light</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
         <item name="android:textSize">8sp</item>
     </style>
 
     <style name="ToolbarTheme.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:fontFamily">sans-serif-condensed-light</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
         <item name="android:textSize">16sp</item>
