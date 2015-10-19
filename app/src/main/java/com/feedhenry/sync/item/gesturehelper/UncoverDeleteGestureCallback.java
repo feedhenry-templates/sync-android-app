@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample.item.gesturehelper;
+package com.feedhenry.sync.item.gesturehelper;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 
-import redhat.com.syncsample.item.ShoppingItemAdapter;
+import com.feedhenry.sync.item.ShoppingItemAdapter;
 
 /**
  * Callback helper for showing/hiding the delete option

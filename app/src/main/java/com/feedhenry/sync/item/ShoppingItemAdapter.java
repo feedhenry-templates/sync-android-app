@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample.item;
+package com.feedhenry.sync.item;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import redhat.com.syncsample.R;
+import com.feedhenry.sync.R;
 
 /**
  * This class maps a List of Shopping Items into a View in a RecyclerView
