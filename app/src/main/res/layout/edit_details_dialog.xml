@@ -30,7 +30,8 @@
         android:layout_toRightOf="@+id/item_name_label"
         android:layout_toEndOf="@+id/item_name_label"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType="text"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +52,8 @@
         android:layout_toRightOf="@+id/item_id_label"
         android:layout_toEndOf="@+id/item_id_label"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType="number"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,7 +74,8 @@
         android:layout_toRightOf="@+id/item_created_label"
         android:layout_toEndOf="@+id/item_created_label"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType="number"/>
 
     <Button
         android:layout_width="wrap_content"
