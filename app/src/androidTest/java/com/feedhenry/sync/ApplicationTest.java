@@ -1,4 +1,4 @@
-package redhat.com.syncsample;
+package com.feedhenry.sync;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
