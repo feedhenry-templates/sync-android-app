@@ -15,10 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Date;
-
 import com.feedhenry.sync.R;
-import com.feedhenry.sync.item.ShoppingItem;
+
+import java.util.Date;
 
 /**
  * This is the Dialog which users will use to create Shopping Items.
