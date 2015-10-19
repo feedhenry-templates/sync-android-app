@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -63,10 +64,10 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
             Date createdDate = new Date(time);
 
             if (createdDate.after(today.getTime())) {
-                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
                 holder.itemDateField.setText(format.format(createdDate));
             } else {
-                SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
+                SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
                 holder.itemDateField.setText(format.format(createdDate));
             }
 
