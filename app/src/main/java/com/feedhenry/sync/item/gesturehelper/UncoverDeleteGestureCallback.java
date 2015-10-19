@@ -9,11 +9,10 @@ package com.feedhenry.sync.item.gesturehelper;
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-
-import java.util.HashMap;
 
 import com.feedhenry.sync.item.ShoppingItemAdapter;
+
+import java.util.HashMap;
 
 /**
  * Callback helper for showing/hiding the delete option
