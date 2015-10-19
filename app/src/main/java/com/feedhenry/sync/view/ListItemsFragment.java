@@ -4,12 +4,12 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample.view;
+package com.feedhenry.sync.view;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,17 +27,16 @@ import com.feedhenry.sdk.sync.FHSyncClient;
 import com.feedhenry.sdk.sync.FHSyncConfig;
 import com.feedhenry.sdk.sync.FHSyncListener;
 import com.feedhenry.sdk.sync.NotificationMessage;
+import com.feedhenry.sync.R;
+import com.feedhenry.sync.item.ShoppingItem;
+import com.feedhenry.sync.item.ShoppingItemAdapter;
+import com.feedhenry.sync.item.ShoppingItemSelectHandler;
+import com.feedhenry.sync.item.gesturehelper.UncoverDeleteGestureCallback;
 
 import org.json.fh.JSONObject;
 
 import java.util.Iterator;
 import java.util.TreeSet;
-
-import redhat.com.syncsample.R;
-import redhat.com.syncsample.item.ShoppingItem;
-import redhat.com.syncsample.item.ShoppingItemAdapter;
-import redhat.com.syncsample.item.ShoppingItemSelectHandler;
-import redhat.com.syncsample.item.gesturehelper.UncoverDeleteGestureCallback;
 
 /**
  * This class sets up synchronization, displays Shopping Items, and sends events to the sync system.

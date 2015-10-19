@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample.item;
+package com.feedhenry.sync.item;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,15 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.feedhenry.sync.R;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
-
-import redhat.com.syncsample.R;
 
 /**
  * This class maps a List of Shopping Items into a View in a RecyclerView
@@ -62,10 +63,10 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
             Date createdDate = new Date(time);
 
             if (createdDate.after(today.getTime())) {
-                SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
                 holder.itemDateField.setText(format.format(createdDate));
             } else {
-                SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
+                SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
                 holder.itemDateField.setText(format.format(createdDate));
             }
 

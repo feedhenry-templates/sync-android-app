@@ -14,11 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Name"
+        android:text="@string/name"
         android:id="@+id/item_name_label"
         android:layout_alignParentTop="true"
         android:layout_alignBaseline="@+id/item_name_field"
-        android:layout_toLeftOf="@+id/item_id_field"
         />
 
     <EditText
@@ -27,22 +26,25 @@
         android:id="@+id/item_name_field"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/item_name_label"
+        android:layout_toEndOf="@+id/item_name_label"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:inputType="text"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:id="@+id/cancel_button"
         style="@style/ButtonStyle"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/save_button"/>
+        android:layout_toLeftOf="@+id/save_button"
+        android:layout_toStartOf="@+id/save_button"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         style="@style/ButtonStyle"
         android:id="@+id/save_button"
         android:layout_alignParentBottom="true"

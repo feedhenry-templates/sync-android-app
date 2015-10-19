@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package redhat.com.syncsample.view;
+package com.feedhenry.sync.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,24 +15,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import redhat.com.syncsample.R;
-import redhat.com.syncsample.item.ShoppingItem;
+import com.feedhenry.sync.R;
+
+import java.util.Date;
 
 /**
- * This is the Dialog users will use to edit Shopping Items
+ * This is the Dialog which users will use to create Shopping Items.
  */
-public class EditDetailsDialogFragment extends DialogFragment {
+public class CreateItemDialogFragment extends DialogFragment {
 
-    private static final String SHOPPING_ITEM_KEY = "com.redhat.syncsample.SHOPPING_ITEM";
     private EditDetailsViewHolder holder;
-    private ShoppingItem shoppingItem;
-    private ListItemsFragment saveHandler;
+    private ListItemsFragment createHandler;
 
-    public static EditDetailsDialogFragment newInstance(ShoppingItem item) {
-        EditDetailsDialogFragment fragment = new EditDetailsDialogFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(SHOPPING_ITEM_KEY, item);
-        fragment.setArguments(args);
+    public static CreateItemDialogFragment newInstance() {
+        CreateItemDialogFragment fragment = new CreateItemDialogFragment();
         return fragment;
     }
 
@@ -47,17 +43,16 @@ public class EditDetailsDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.edit_details_dialog, null);
-        this.shoppingItem = (ShoppingItem) getArguments().getSerializable(SHOPPING_ITEM_KEY);
+        View view = View.inflate(container.getContext(), R.layout.save_details_dialog, null);
         this.holder = new EditDetailsViewHolder(view);
-        getDialog().setTitle(R.string.edit_dialog_title);
+        getDialog().setTitle(R.string.create_item_dialog_title);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        holder.bind(shoppingItem, this);
+        holder.bind(this);
     }
 
     @Override
@@ -68,35 +63,30 @@ public class EditDetailsDialogFragment extends DialogFragment {
 
     private void saveItem() {
         final String newName = holder.nameField.getText().toString();
-        final String newCreated = holder.createdField.getText().toString();
-        saveHandler.saveItem(shoppingItem, newName, newCreated);
+        final String newCreated = String.valueOf(new Date().getTime());
+        createHandler.createItem(newName, newCreated);
         dismiss();
     }
 
-    public void setSaveHandler(ListItemsFragment saveHandler) {
-        this.saveHandler = saveHandler;
+    public void setCreateHandler(ListItemsFragment createHandler) {
+        this.createHandler = createHandler;
     }
 
     private static class EditDetailsViewHolder {
         final Button saveButton;
         final Button cancelButton;
         final EditText nameField;
-        final EditText idField;
-        final EditText createdField;
+
 
 
         public EditDetailsViewHolder(View view) {
             this.cancelButton = (Button) view.findViewById(R.id.cancel_button);
             this.saveButton = (Button) view.findViewById(R.id.save_button);
             this.nameField = (EditText) view.findViewById(R.id.item_name_field);
-            this.idField = (EditText) view.findViewById(R.id.item_id_field);
-            this.createdField = (EditText) view.findViewById(R.id.item_created_field);
+
         }
 
-        void bind(ShoppingItem item, final EditDetailsDialogFragment fragment) {
-            idField.setText(item.getId());
-            createdField.setText(item.getCreated());
-            nameField.setText(item.getName());
+        void bind(final CreateItemDialogFragment fragment) {
             saveButton.setOnClickListener(new View.OnClickListener() {
                                               @Override
                                               public void onClick(View v) {
