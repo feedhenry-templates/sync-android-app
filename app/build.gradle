@@ -16,6 +16,11 @@ android {
         versionName "1.0"
     }
 
+    lintOptions {
+        abortOnError true
+        disable 'OldTargetApi', 'GradleDependency'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
