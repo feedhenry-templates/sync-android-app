@@ -7,9 +7,9 @@
 package com.feedhenry.sync.view;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +27,11 @@ import com.feedhenry.sdk.sync.FHSyncClient;
 import com.feedhenry.sdk.sync.FHSyncConfig;
 import com.feedhenry.sdk.sync.FHSyncListener;
 import com.feedhenry.sdk.sync.NotificationMessage;
+import com.feedhenry.sync.R;
+import com.feedhenry.sync.item.ShoppingItem;
+import com.feedhenry.sync.item.ShoppingItemAdapter;
+import com.feedhenry.sync.item.ShoppingItemSelectHandler;
+import com.feedhenry.sync.item.gesturehelper.UncoverDeleteGestureCallback;
 
 import org.json.fh.JSONObject;
 
@@ -34,12 +39,6 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 import cz.msebera.android.httpclient.HttpHost;
-
-import com.feedhenry.sync.R;
-import com.feedhenry.sync.item.ShoppingItem;
-import com.feedhenry.sync.item.ShoppingItemAdapter;
-import com.feedhenry.sync.item.ShoppingItemSelectHandler;
-import com.feedhenry.sync.item.gesturehelper.UncoverDeleteGestureCallback;
 
 /**
  * This class sets up synchronization, displays Shopping Items, and sends events to the sync system.
