@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:text="@string/cancel"
         android:id="@+id/cancel_button"
-        style="@style/ButtonStyle"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/save_button"
         android:layout_toStartOf="@+id/save_button"/>
@@ -45,7 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
-        style="@style/ButtonStyle"
         android:id="@+id/save_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
