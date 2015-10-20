@@ -49,7 +49,6 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
     private static final String TAG = "FHSyncActivity";
     public static final String DATA_ID = "myShoppingList";
 
-
     private RecyclerView list;
     private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
     private FHSyncClient syncClient;
@@ -90,8 +89,8 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
             @Override
             public void success(FHResponse pResponse) {
                 Log.d(TAG, "FH.init - success");
-                FHHttpClient.setTimeout(40 * 1000);
-                //FHHttpClient.setHttpProxy(new HttpHost("10.0.2.2", 8888, "http"));
+                FHHttpClient.setTimeout(5 * 1000);
+                FHHttpClient.setHttpProxy(new HttpHost("10.0.2.2", 8888, "http"));
                 fireSync();
             }
 
@@ -102,8 +101,6 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
             }
         });
     }
-
-
 
     private void fireSync() {
 
