@@ -47,7 +47,7 @@ public class EditDetailsDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = View.inflate(container.getContext(), R.layout.edit_details_dialog, null);
+        View view = View.inflate(getActivity(), R.layout.edit_details_dialog, null);
         this.shoppingItem = (ShoppingItem) getArguments().getSerializable(SHOPPING_ITEM_KEY);
         this.holder = new EditDetailsViewHolder(view);
         getDialog().setTitle(R.string.edit_dialog_title);
