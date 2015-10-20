@@ -8,43 +8,20 @@
 -->
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-      <item name="colorPrimary">@color/redhat_red</item>
-      <item name="colorPrimaryDark">@color/redhat_dark_red</item>
-      <item name="colorAccent">@color/redhat_accent</item>
-      <item name="android:background">@color/background_white</item>
-      <item name="android:textColorPrimary">#3b3b3b</item>
-  </style>
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
-        <item name="android:background">@android:color/transparent</item>
-        <item name="background">@android:color/transparent</item>
-        <item name="android:textSize">8sp</item>
+    <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
-    <style name="ToolbarTheme.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="background">@android:color/transparent</item>
-        <item name="android:textSize">16sp</item>
+    <style name="MyTheme.Base" parent="MyTheme">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_slide_up</item>
         <item name="android:windowExitAnimation">@anim/dialog_slide_down</item>
-    </style>
-    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
-        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
-    </style>
-
-    <style name="ButtonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
-        <item name="android:padding">8dp</item>
-        <item name="android:layout_margin">8dp</item>
-        <item name="android:minHeight">36dp</item>
     </style>
 
 </resources>
