@@ -33,6 +33,7 @@ import org.json.fh.JSONObject;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import cz.msebera.android.httpclient.HttpHost;
 import redhat.com.syncsample.R;
 import redhat.com.syncsample.item.ShoppingItem;
 import redhat.com.syncsample.item.ShoppingItemAdapter;
@@ -47,7 +48,6 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
 
     private static final String TAG = "FHSyncActivity";
     public static final String DATA_ID = "myShoppingList";
-
 
     private RecyclerView list;
     private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
@@ -89,7 +89,8 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
             @Override
             public void success(FHResponse pResponse) {
                 Log.d(TAG, "FH.init - success");
-                FHHttpClient.setTimeout(45*1000);
+                FHHttpClient.setTimeout(5 * 1000);
+                FHHttpClient.setHttpProxy(new HttpHost("10.0.2.2", 8888, "http"));
                 fireSync();
             }
 
@@ -101,8 +102,6 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
         });
     }
 
-
-
     private void fireSync() {
 
         this.syncClient = FHSyncClient.getInstance();
@@ -110,11 +109,12 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
         //create a new instance of sync config
         FHSyncConfig config = new FHSyncConfig();
         config.setNotifySyncStarted(true);
+        config.setNotifyLocalUpdateApplied(true);
         config.setAutoSyncLocalUpdates(true);
         config.setNotifyDeltaReceived(true);
         config.setNotifySyncComplete(true);
         config.setUseCustomSync(false);
-        config.setSyncFrequency(1);
+        config.setSyncFrequency(10);
 
         //initialize the sync client
         syncClient.init(getActivity().getApplicationContext(), config, new FHSyncListener() {
@@ -140,8 +140,6 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
                 Log.d(TAG, "syncClient - onSyncCompleted");
                 Log.d(TAG, "Sync message: " + pMessage.getMessage());
 
-
-
                 JSONObject allData = syncClient.list(DATA_ID);
                 Iterator<String> it = allData.keys();
                 TreeSet<ShoppingItem> itemsToSync = new TreeSet<ShoppingItem>();
@@ -151,6 +149,9 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
                     JSONObject data = allData.getJSONObject(key);
                     JSONObject dataObj = data.getJSONObject("data");
                     String name = dataObj.optString("name", "NO name");
+                    if (name.startsWith("N")) {
+                        Log.d(TAG, "Sync Complete Name : " + name);
+                    }
                     String created = dataObj.optString("created", "no date");
                     ShoppingItem item = new ShoppingItem(key, name, created);
                     itemsToSync.add(item);
@@ -177,11 +178,35 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
             @Override
             public void onLocalUpdateApplied(NotificationMessage pMessage) {
                 Log.d(TAG, "syncClient - onLocalUpdateApplied");
+
+                JSONObject allData = syncClient.list(DATA_ID);
+
+                Iterator<String> it = allData.keys();
+                TreeSet<ShoppingItem> itemsToSync = new TreeSet<ShoppingItem>();
+
+                while (it.hasNext()) {
+                    String key = it.next();
+                    JSONObject data = allData.getJSONObject(key);
+                    JSONObject dataObj = data.getJSONObject("data");
+                    String name = dataObj.optString("name", "NO name");
+                    if (name.startsWith("N")) {
+                        Log.d(TAG, "Local Name : " + name);
+                    }
+                    String created = dataObj.optString("created", "no date");
+                    ShoppingItem item = new ShoppingItem(key, name, created);
+                    itemsToSync.add(item);
+                }
+
+                adapter.removeMissingItemsFrom(itemsToSync);
+                adapter.addNewItemsFrom(itemsToSync);
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onDeltaReceived(NotificationMessage pMessage) {
                 Log.d(TAG, "syncClient - onDeltaReceived");
+                Log.d(TAG, "syncClient : " + pMessage.toString());
             }
 
             @Override
