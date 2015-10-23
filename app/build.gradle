@@ -38,5 +38,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
-    compile 'com.feedhenry:fh-android-sdk:3.0.0-SNAPSHOT'
+    compile 'com.feedhenry:fh-android-sdk:2.5.0'
 }
