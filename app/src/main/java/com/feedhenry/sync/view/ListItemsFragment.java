@@ -85,21 +85,9 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
     @Override
     public void onStart() {
         super.onStart();
-        FH.init(getActivity(), new FHActCallback() {
-            @Override
-            public void success(FHResponse pResponse) {
-                Log.d(TAG, "FH.init - success");
-                FHHttpClient.setTimeout(5 * 1000);
-                FHHttpClient.setHttpProxy(new HttpHost("10.0.2.2", 8888, "http"));
-                fireSync();
-            }
-
-            @Override
-            public void fail(FHResponse pResponse) {
-                Log.d(TAG, "FH.init - fail");
-                Log.e(TAG, pResponse.getErrorMessage(), pResponse.getError());
-            }
-        });
+        FHHttpClient.setTimeout(5 * 1000);
+        FHHttpClient.setHttpProxy(new HttpHost("10.0.2.2", 8888, "http"));
+        fireSync();
     }
 
     private void fireSync() {

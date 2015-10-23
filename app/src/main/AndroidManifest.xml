@@ -14,7 +14,7 @@
         android:theme="@style/MyTheme.Base"
         tools:replace="android:icon">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.SplashScreenActivity"
             android:label="@string/sync_demo_title"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait" />
     </application>
 
 </manifest>
