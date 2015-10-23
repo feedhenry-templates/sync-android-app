@@ -1,92 +1,93 @@
 /**
  * Copyright (c) 2015 FeedHenry Ltd, All Rights Reserved.
- * <p/>
+ *
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package com.feedhenry.sync.view;
+package com.feedhenry.sync.activities;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
 
-import com.feedhenry.sdk.FH;
-import com.feedhenry.sdk.FHActCallback;
-import com.feedhenry.sdk.FHHttpClient;
-import com.feedhenry.sdk.FHResponse;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.feedhenry.sdk.sync.FHSyncClient;
 import com.feedhenry.sdk.sync.FHSyncConfig;
 import com.feedhenry.sdk.sync.FHSyncListener;
 import com.feedhenry.sdk.sync.NotificationMessage;
 import com.feedhenry.sync.R;
-import com.feedhenry.sync.item.ShoppingItem;
-import com.feedhenry.sync.item.ShoppingItemAdapter;
-import com.feedhenry.sync.item.ShoppingItemSelectHandler;
-import com.feedhenry.sync.item.gesturehelper.UncoverDeleteGestureCallback;
+import com.feedhenry.sync.helper.SwipeTouchHelper;
+import com.feedhenry.sync.listener.RecyclerItemClickListener;
+import com.feedhenry.sync.model.ShoppingItem;
+import com.feedhenry.sync.adapter.ShoppingItemAdapter;
 
 import org.json.fh.JSONObject;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import cz.msebera.android.httpclient.HttpHost;
-
-/**
- * This class sets up synchronization, displays Shopping Items, and sends events to the sync system.
- */
-public class ListItemsFragment extends Fragment implements ShoppingItemSelectHandler {
-
+public class ListOfItemsActivity extends AppCompatActivity {
 
     private static final String TAG = "FHSyncActivity";
-    public static final String DATA_ID = "myShoppingList";
+    private static final String DATA_ID = "myShoppingList";
+
+    private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
 
     private RecyclerView list;
-    private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
     private FHSyncClient syncClient;
 
-    public ListItemsFragment() {
-
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_main, container, false);
-        list = (RecyclerView) contentView.findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.setAdapter(adapter);
-        adapter.addShoppingItemSelectHandler(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.list_of_items_activity);
 
-        UncoverDeleteGestureCallback callback = new UncoverDeleteGestureCallback();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        list = (RecyclerView) findViewById(R.id.list);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(adapter);
+        list.addOnItemTouchListener(new RecyclerItemClickListener(
+                getApplicationContext(),
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        showPopup(adapter.getItem(position));
+                    }
+                }
+        ));
+
+        SwipeTouchHelper callback = new SwipeTouchHelper(new SwipeTouchHelper.OnItemSwipeListener() {
+            @Override
+            public void onItemSwipe(ShoppingItem item) {
+                deleteItem(item);
+            }
+        });
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(list);
 
-        FloatingActionButton fab = (FloatingActionButton) contentView.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreateItemDialogFragment newFragment = CreateItemDialogFragment.newInstance();
-                newFragment.show(getFragmentManager(), "dialog");
-                newFragment.setCreateHandler(ListItemsFragment.this);
+                showPopup(new ShoppingItem());
             }
         });
-        return contentView;
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        FHHttpClient.setTimeout(5 * 1000);
-        FHHttpClient.setHttpProxy(new HttpHost("10.0.2.2", 8888, "http"));
         fireSync();
     }
 
@@ -105,22 +106,7 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
         config.setSyncFrequency(10);
 
         //initialize the sync client
-        syncClient.init(getActivity().getApplicationContext(), config, new FHSyncListener() {
-
-            @Override
-            public void onUpdateOffline(NotificationMessage pMessage) {
-                Log.d(TAG, "syncClient - onUpdateOffline");
-            }
-
-            @Override
-            public void onSyncStarted(NotificationMessage pMessage) {
-                Log.d(TAG, "syncClient - onSyncStarted");
-            }
-
-            @Override
-            public void onSyncFailed(NotificationMessage pMessage) {
-                Log.d(TAG, "syncClient - onSyncFailed");
-            }
+        syncClient.init(getApplicationContext(), config, new FHSyncListener() {
 
             @Override
             //On sync complete, list all the data and update the adapter
@@ -149,18 +135,6 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
                 adapter.addNewItemsFrom(itemsToSync);
 
                 adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onRemoteUpdateFailed(NotificationMessage pMessage) {
-                Log.d(TAG, "syncClient - onRemoteUpdateFailed");
-
-            }
-
-            @Override
-            public void onRemoteUpdateApplied(NotificationMessage pMessage) {
-                Log.d(TAG, "syncClient - onRemoteUpdateApplied");
-
             }
 
             @Override
@@ -198,6 +172,33 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
             }
 
             @Override
+            public void onUpdateOffline(NotificationMessage pMessage) {
+                Log.d(TAG, "syncClient - onUpdateOffline");
+            }
+
+            @Override
+            public void onSyncStarted(NotificationMessage pMessage) {
+                Log.d(TAG, "syncClient - onSyncStarted");
+            }
+
+            @Override
+            public void onSyncFailed(NotificationMessage pMessage) {
+                Log.d(TAG, "syncClient - onSyncFailed");
+            }
+
+            @Override
+            public void onRemoteUpdateFailed(NotificationMessage pMessage) {
+                Log.d(TAG, "syncClient - onRemoteUpdateFailed");
+
+            }
+
+            @Override
+            public void onRemoteUpdateApplied(NotificationMessage pMessage) {
+                Log.d(TAG, "syncClient - onRemoteUpdateApplied");
+
+            }
+
+            @Override
             public void onCollisionDetected(NotificationMessage pMessage) {
                 Log.d(TAG, "syncClient - onCollisionDetected");
             }
@@ -209,67 +210,61 @@ public class ListItemsFragment extends Fragment implements ShoppingItemSelectHan
 
         });
 
-        //start the sync process
+        // Start the sync process
         try {
             syncClient.manage(DATA_ID, null, new JSONObject());
         } catch (Exception e) {
-            e.printStackTrace();
             Log.e(TAG, e.getMessage(), e);
         }
+
     }
 
-    @Override
-    public void shoppingItemSelected(ShoppingItem shoppingItem) {
-        EditDetailsDialogFragment newFragment = EditDetailsDialogFragment.newInstance(shoppingItem);
-        newFragment.show(getFragmentManager(), "dialog");
-        newFragment.setSaveHandler(this);
-    }
+    private void showPopup(final ShoppingItem item) {
+        final View customView = View.inflate(getApplicationContext(), R.layout.form_item_dialog, null);
+        final EditText name = (EditText) customView.findViewById(R.id.name);
+        name.setText(item.getName());
 
-    @Override
-    public void shoppingItemLongSelected(final ShoppingItem shoppingItem) {
-        new AlertDialog.Builder(getActivity()).setTitle(getResources().getString(R.string.delete_dialog_title)).setMessage("Delete Item :" + shoppingItem.getName() + "?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.shopping_item)
+                .customView(customView, false)
+                .positiveText(R.string.save)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteItem(shoppingItem.getId());
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        item.setName(name.getText().toString());
+                        saveItem(item);
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                })
+                .negativeText(R.string.cancel)
+                .show();
+    }
+
+    private void saveItem(ShoppingItem item) {
+
+        JSONObject data = new JSONObject();
+        data.put("name", item.getName());
+
+        try {
+
+            if (item.getId() == null) {
+                data.put("created", String.valueOf(new Date().getTime()));
+                syncClient.create(DATA_ID, data);
+            } else {
+                data.put("created", item.getCreated());
+                syncClient.update(DATA_ID, item.getId(), data);
             }
-        }).create().show();
+        } catch (Exception e) {
+            Log.e(TAG, "failed to data data: " + data.toString(), e);
+        }
+
     }
 
-    public void saveItem(ShoppingItem shoppingItem, String newName, String newCreated) {
-        JSONObject updated = new JSONObject();
-        updated.put("name", newName);
-        updated.put("created", newCreated);
+    private void deleteItem(ShoppingItem item) {
         try {
-            if (syncClient != null) {
-                syncClient.update(DATA_ID, shoppingItem.getId(), updated);
-            }
+            syncClient.delete(DATA_ID, item.getId());
         } catch (Exception e) {
-            Log.e(TAG, "failed to update data: " + updated.toString(), e);
+            Log.e(TAG, "failed to delete data: " + item.getId(), e);
         }
     }
 
-    public void createItem(String newName, String newCreated) {
-        JSONObject create = new JSONObject();
-        create.put("name", newName);
-        create.put("created", newCreated);
-        try {
-            syncClient.create(DATA_ID, create);
-        } catch (Exception e) {
-            Log.e(TAG, "failed to create data: " + create.toString(), e);
-        }
-    }
-
-    public void deleteItem(String itemId) {
-        try {
-            syncClient.delete(DATA_ID, itemId);
-        } catch (Exception e) {
-            Log.e(TAG, "failed to delete data: " + itemId, e);
-        }
-    }
 }

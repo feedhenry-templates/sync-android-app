@@ -4,7 +4,7 @@
  * Please refer to your contract with FeedHenry for the software license agreement.
  * If you do not have a contract, you do not have a license to use this software.
  */
-package com.feedhenry.sync.item;
+package com.feedhenry.sync.model;
 
 import com.feedhenry.sdk.sync.FHSyncUtils;
 
@@ -16,30 +16,38 @@ import java.io.Serializable;
  * The shopping item is the model item that we are synchonizing.
  */
 public class ShoppingItem implements Serializable, Comparable<ShoppingItem> {
-    private String itemId;
-    private String itemName;
-    private String itemCreated;
 
-    public ShoppingItem(String pId, String pName, String pCreated) {
-        itemId = pId;
-        itemName = pName;
-        itemCreated = pCreated;
+    private String id;
+    private String name;
+    private String created;
+
+    public ShoppingItem() {
+    }
+
+    public ShoppingItem(String id, String name, String created) {
+        this.id = id;
+        this.name = name;
+        this.created = created;
     }
 
     public String getId() {
-        return itemId;
+        return id;
     }
 
     public String getName() {
-        return itemName;
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCreated() {
-        return itemCreated;
+        return created;
     }
 
     public String toString() {
-        return itemName;
+        return name;
     }
 
     @Override
@@ -49,18 +57,18 @@ public class ShoppingItem implements Serializable, Comparable<ShoppingItem> {
 
         ShoppingItem that = (ShoppingItem) o;
 
-        if (itemId != null ? !itemId.equals(that.itemId) : that.itemId != null) return false;
-        if (itemName != null ? !itemName.equals(that.itemName) : that.itemName != null)
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null)
             return false;
-        return !(itemCreated != null ? !itemCreated.equals(that.itemCreated) : that.itemCreated != null);
+        return !(created != null ? !created.equals(that.created) : that.created != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = itemId != null ? itemId.hashCode() : 0;
-        result = 31 * result + (itemName != null ? itemName.hashCode() : 0);
-        result = 31 * result + (itemCreated != null ? itemCreated.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (created != null ? created.hashCode() : 0);
         return result;
     }
 
@@ -71,11 +79,11 @@ public class ShoppingItem implements Serializable, Comparable<ShoppingItem> {
             return 1;
         }
 
-        int compareResult = compareStrings(itemCreated, another.itemCreated);
+        int compareResult = compareStrings(created, another.created);
         if (compareResult == 0) {
-            compareResult = compareStrings(itemName, another.itemName);
+            compareResult = compareStrings(name, another.name);
             if (compareResult == 0) {
-                compareResult = compareStrings(itemId, another.itemId);
+                compareResult = compareStrings(id, another.id);
             }
         }
 
@@ -97,8 +105,8 @@ public class ShoppingItem implements Serializable, Comparable<ShoppingItem> {
 
     public long getFHhash() {
         JSONObject create = new JSONObject();
-        create.put("name", this.itemName);
-        create.put("created", this.itemCreated);
+        create.put("name", this.name);
+        create.put("created", this.created);
         try {
             return FHSyncUtils.generateHash(create.toString()).hashCode();
         } catch (Exception e) {

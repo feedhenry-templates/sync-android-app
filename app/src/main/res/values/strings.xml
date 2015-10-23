@@ -21,4 +21,6 @@
     <string name="created">Created</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="item_name_hint">Name of the item</string>
+    <string name="shopping_item">Shopping Item</string>
 </resources>
