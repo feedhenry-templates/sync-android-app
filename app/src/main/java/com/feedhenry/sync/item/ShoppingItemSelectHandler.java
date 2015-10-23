@@ -7,6 +7,8 @@
 package com.feedhenry.sync.item;
 
 
+import com.feedhenry.sync.model.ShoppingItem;
+
 /**
  * Objects which implement this Handler receive touch select events from ShoppingItem touches
  */

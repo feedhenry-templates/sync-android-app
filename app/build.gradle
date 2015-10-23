@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.feedhenry.helloworld"
-        minSdkVersion 7
+        minSdkVersion 8
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -39,4 +39,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
     compile 'com.feedhenry:fh-android-sdk:2.5.0'
+    compile 'com.afollestad.material-dialogs:core:0.8.4.2@aar'
 }
