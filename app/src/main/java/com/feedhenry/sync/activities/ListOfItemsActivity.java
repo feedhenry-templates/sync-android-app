@@ -25,10 +25,10 @@ import com.feedhenry.sdk.sync.FHSyncConfig;
 import com.feedhenry.sdk.sync.FHSyncListener;
 import com.feedhenry.sdk.sync.NotificationMessage;
 import com.feedhenry.sync.R;
+import com.feedhenry.sync.adapter.ShoppingItemAdapter;
 import com.feedhenry.sync.helper.SwipeTouchHelper;
 import com.feedhenry.sync.listener.RecyclerItemClickListener;
 import com.feedhenry.sync.model.ShoppingItem;
-import com.feedhenry.sync.adapter.ShoppingItemAdapter;
 
 import org.json.fh.JSONObject;
 
@@ -225,7 +225,8 @@ public class ListOfItemsActivity extends AppCompatActivity {
         name.setText(item.getName());
 
         new MaterialDialog.Builder(this)
-                .title(R.string.shopping_item)
+                .title((item.getId() == null) ? getString(R.string.new_item)
+                        : getString(R.string.edit_item) + ": " + item.getName())
                 .customView(customView, false)
                 .positiveText(R.string.save)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
