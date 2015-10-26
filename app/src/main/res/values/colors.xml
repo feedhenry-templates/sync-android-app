@@ -9,10 +9,9 @@
 -->
 <resources>
 
-    <!-- http://www.materialpalette.com/red/indigo -->
     <color name="primary">#F44336</color>
     <color name="primary_dark">#D32F2F</color>
-    <color name="accent">#536DFE</color>
+    <color name="accent">#007a87</color>
 
     <color name="background">#fafafa</color>
 
