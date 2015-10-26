@@ -11,16 +11,9 @@
 
     <string name="app_name">SyncSample</string>
     <string name="sync_demo_title">Sync Demo</string>
-    <string name="edit_dialog_title">Edit Item</string>
-    <string name="create_item_dialog_title">Create Item</string>
-    <string name="delete_dialog_title">Delete Item</string>
-    <string name="name">Name</string>
     <string name="cancel">Cancel</string>
-    <string name="id">Id</string>
     <string name="test">Test</string>
-    <string name="created">Created</string>
     <string name="save">Save</string>
-    <string name="delete">Delete</string>
     <string name="item_name_hint">Name of the item</string>
     <string name="shopping_item">Shopping Item</string>
 </resources>
