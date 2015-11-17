@@ -15,14 +15,7 @@
     limitations under the License.
 
 -->
-<?xml version="1.0" encoding="utf-8"?><!--
-
-    Copyright (c) 2015 FeedHenry Ltd, All Rights Reserved.
-
-    Please refer to your contract with FeedHenry for the software license agreement.
-    If you do not have a contract, you do not have a license to use this software.
-
--->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
