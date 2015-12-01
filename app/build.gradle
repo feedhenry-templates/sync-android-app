@@ -18,7 +18,7 @@ android {
 
     lintOptions {
         abortOnError true
-        disable 'OldTargetApi', 'GradleDependency', 'UnusedAttribute', 'IconLocation'
+        disable 'OldTargetApi', 'GradleDependency', 'IconLocation'
     }
 
     buildTypes {
