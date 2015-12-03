@@ -21,6 +21,10 @@ android {
         disable 'OldTargetApi', 'GradleDependency', 'IconLocation'
     }
 
+    adbOptions {
+        timeOutInMs 5 * 60 * 1000 // 5 minutes
+    }
+
     buildTypes {
         release {
             minifyEnabled false
