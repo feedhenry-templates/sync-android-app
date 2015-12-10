@@ -18,7 +18,11 @@ android {
 
     lintOptions {
         abortOnError true
-        disable 'OldTargetApi', 'GradleDependency', 'UnusedAttribute', 'IconLocation'
+        disable 'OldTargetApi', 'GradleDependency', 'IconLocation'
+    }
+
+    adbOptions {
+        timeOutInMs 5 * 60 * 1000 // 5 minutes
     }
 
     buildTypes {
@@ -39,5 +43,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
     compile 'com.feedhenry:fh-android-sdk:2.5.0'
-    compile 'com.afollestad.material-dialogs:core:0.8.4.2@aar'
+    compile 'com.github.afollestad.material-dialogs:core:0.8.5.2@aar'
 }
