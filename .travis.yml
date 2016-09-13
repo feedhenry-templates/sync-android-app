@@ -27,6 +27,8 @@ android:
     - sys-img-armeabi-v7a-android-22
 
 env:
+  global:
+    - ADB_INSTALL_TIMEOUT=10 # default is 2 minutes
   matrix:
     - ANDROID_EMULATOR=android-10 ANDROID_ABI=armeabi
     - ANDROID_EMULATOR=android-15 ANDROID_ABI=armeabi-v7a
