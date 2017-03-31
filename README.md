@@ -12,7 +12,7 @@ Prerequisites: fh-android-sdk : 3.0.+, Android Studio : 1.4.0 or newer, Android 
 
 ## What is it?
 
-This application manages items in a collection that is synchronized with a remote RHMAP cloud application.  The user can create, update, and delete collection items.  Refer to [fhconfig.properties](app/src/main/assets/fhconfig.properties) and [ListItemsFragment](app/src/main/java/redhat/com/syncsample/view/ListItemsFragment.java) for the delevant pieces of code and configuraiton.
+This application manages items in a collection that is synchronized with a remote RHMAP cloud application.  The user can create, update, and delete collection items.  Refer to `app/src/main/assets/fhconfig.properties` and `app/src/main/java/com/feedhenry/sync/activities/ListOfItemsActivity.java` for the delevant pieces of code and configuraiton.
 
 If you do not have access to a RHMAP instance, you can sign up for a free instance at [https://openshift.feedhenry.com/](https://openshift.feedhenry.com/).
 
@@ -31,7 +31,7 @@ If you wish to contribute to this template, the following information may be hel
  * Android SDK : 22+ or newer
 
 ## Build instructions
- * Edit [fhconfig.properties](app/src/main/assets/fhconfig.properties) to include the relevant information from RHMAP.  
+ * Edit `app/src/main/assets/fhconfig.properties` to include the relevant information from RHMAP.  
  * Attach running Android Device with API 16+ running  
  * ./gradlew installDebug  
  
