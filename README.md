@@ -12,7 +12,7 @@ Prerequisites: fh-android-sdk : 3.0.+, Android Studio : 1.4.0 or newer, Android 
 
 ## What is it?
 
-This application manages items in a collection that is synchronized with a remote RHMAP cloud application.  The user can create, update, and delete collection items.  Refer to `app/src/main/assets/fhconfig.properties` and `app/src/main/java/com/feedhenry/sync/activities/ListOfItemsActivity.java` for the delevant pieces of code and configuraiton.
+This application manages items in a collection that is synchronized with a remote RHMAP cloud application.  The user can create, update, and delete collection items.  Refer to `app/src/main/assets/fhconfig.properties` and `app/src/main/java/com/feedhenry/sync/activities/ListOfItemsActivity.java` for the relevant pieces of code and configuraiton.
 
 If you do not have access to a RHMAP instance, you can sign up for a free instance at [https://openshift.feedhenry.com/](https://openshift.feedhenry.com/).
 
@@ -43,7 +43,7 @@ If you wish to contribute to this template, the following information may be hel
 
 ### Creating and Editing Items
 
-[ListOfItemsActivity#saveItem(item)](https://github.com/feedhenry-templates/sync-android-app/blob/master/app/src/main/java/com/feedhenry/sync/activities/ListOfItemsActivity.java#L252) is called by the UI when the a item is created or updated.  This piece of code checks if the object is managed by the syncronization APIs and performs a create or update as appropriate.
+[ListOfItemsActivity#saveItem(item)](https://github.com/feedhenry-templates/sync-android-app/blob/master/app/src/main/java/com/feedhenry/sync/activities/ListOfItemsActivity.java#L252) is called by the UI when the item is created or updated.  This piece of code checks if the object is managed by the syncronization APIs and performs a create or update as appropriate.
 
 ### Removing Items
 
