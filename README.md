@@ -31,7 +31,7 @@ If you wish to contribute to this template, the following information may be hel
  * Android SDK : 22+ or newer
 
 ## Build instructions
- * Edit `app/src/main/assets/fhconfig.properties` to include the relevant information from RHMAP.  
+ * Edit `app/src/main/assets/fhconfig.properties` to include the relevant information from [here](https://access.redhat.com/documentation/en-us/red_hat_mobile_application_platform/4.3/html/client_sdk/native-android#rhmap_server_connection_setup).
  * Attach running Android Device with API 16+ running  
  * ./gradlew installDebug  
  
