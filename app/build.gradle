@@ -44,9 +44,9 @@ license {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:26.0.0'
-    compile 'com.android.support:recyclerview-v7:26.0.0'
-    compile 'com.android.support:design:26.0.0'
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
+    compile 'com.android.support:design:26.0.1'
     compile 'com.feedhenry:fh-android-sdk:3.3.3'
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'
 }
