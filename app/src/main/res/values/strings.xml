@@ -27,4 +27,6 @@
     <string name="feedhenry_logo">Feedhenry Logo</string>
     <string name="new_item">New item</string>
     <string name="edit_item">Edit item</string>
+    <string name="title_nav_list">List</string>
+    <string name="title_nav_collisions">Collisions</string>
 </resources>
