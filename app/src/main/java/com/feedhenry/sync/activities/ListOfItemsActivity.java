@@ -56,24 +56,8 @@ public class ListOfItemsActivity extends AppCompatActivity {
     private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
 
     private RecyclerView list;
+    private RecyclerView collisions;
     private FHSyncClient syncClient;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_list:
-                    Toast.makeText(getBaseContext(), "Item List Pressed", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_collisions:
-                    Toast.makeText(getBaseContext(), "Collisions Pressed", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +83,10 @@ public class ListOfItemsActivity extends AppCompatActivity {
                 }
         ));
 
+        collisions = findViewById(R.id.collisions);
+        collisions.setLayoutManager(new LinearLayoutManager(this));
+
+
         SwipeTouchHelper callback = new SwipeTouchHelper(new SwipeTouchHelper.OnItemSwipeListener() {
             @Override
             public void onItemSwipe(ShoppingItem item) {
@@ -122,6 +110,25 @@ public class ListOfItemsActivity extends AppCompatActivity {
         super.onStart();
         fireSync();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_list:
+                    list.setVisibility(View.VISIBLE);
+                    collisions.setVisibility(View.GONE);
+                    return true;
+                case R.id.navigation_collisions:
+                    list.setVisibility(View.GONE);
+                    collisions.setVisibility(View.VISIBLE);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void fireSync() {
 

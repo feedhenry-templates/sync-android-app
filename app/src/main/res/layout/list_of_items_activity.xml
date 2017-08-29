@@ -39,8 +39,16 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:visibility="visible">
+        </android.support.v7.widget.RecyclerView>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/collisions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:visibility="gone">
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
