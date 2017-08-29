@@ -37,6 +37,7 @@ import com.feedhenry.sdk.sync.FHSyncConfig;
 import com.feedhenry.sdk.sync.FHSyncListener;
 import com.feedhenry.sdk.sync.NotificationMessage;
 import com.feedhenry.sync.R;
+import com.feedhenry.sync.adapter.CollisionItemAdapter;
 import com.feedhenry.sync.adapter.ShoppingItemAdapter;
 import com.feedhenry.sync.helper.SwipeTouchHelper;
 import com.feedhenry.sync.listener.RecyclerItemClickListener;
@@ -53,7 +54,8 @@ public class ListOfItemsActivity extends AppCompatActivity {
     private static final String TAG = "FHSyncActivity";
     private static final String DATA_ID = "myShoppingList";
 
-    private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
+    private ShoppingItemAdapter listAdapter = new ShoppingItemAdapter();
+    private CollisionItemAdapter collisionAdapter = new CollisionItemAdapter();
 
     private RecyclerView list;
     private FloatingActionButton fab;
@@ -73,19 +75,29 @@ public class ListOfItemsActivity extends AppCompatActivity {
 
         list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(adapter);
+        list.setAdapter(listAdapter);
         list.addOnItemTouchListener(new RecyclerItemClickListener(
                 getApplicationContext(),
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        showPopup(adapter.getItem(position));
+                        showPopup(listAdapter.getItem(position));
                     }
                 }
         ));
 
         collisions = findViewById(R.id.collisions);
         collisions.setLayoutManager(new LinearLayoutManager(this));
+        collisions.setAdapter(collisionAdapter);
+        list.addOnItemTouchListener(new RecyclerItemClickListener(
+                getApplicationContext(),
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(getApplicationContext(), "Collision item pressed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ));
 
 
         SwipeTouchHelper callback = new SwipeTouchHelper(new SwipeTouchHelper.OnItemSwipeListener() {
@@ -151,7 +163,7 @@ public class ListOfItemsActivity extends AppCompatActivity {
         syncClient.init(getApplicationContext(), config, new FHSyncListener() {
 
             @Override
-            //On sync complete, list all the data and update the adapter
+            //On sync complete, list all the data and update the listAdapter
             public void onSyncCompleted(NotificationMessage pMessage) {
                 Log.d(TAG, "syncClient - onSyncCompleted");
                 Log.d(TAG, "Sync message: " + pMessage.getMessage());
@@ -173,10 +185,10 @@ public class ListOfItemsActivity extends AppCompatActivity {
                     itemsToSync.add(item);
                 }
 
-                adapter.removeMissingItemsFrom(itemsToSync);
-                adapter.addNewItemsFrom(itemsToSync);
+                listAdapter.removeMissingItemsFrom(itemsToSync);
+                listAdapter.addNewItemsFrom(itemsToSync);
 
-                adapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -201,10 +213,10 @@ public class ListOfItemsActivity extends AppCompatActivity {
                     itemsToSync.add(item);
                 }
 
-                adapter.removeMissingItemsFrom(itemsToSync);
-                adapter.addNewItemsFrom(itemsToSync);
+                listAdapter.removeMissingItemsFrom(itemsToSync);
+                listAdapter.addNewItemsFrom(itemsToSync);
 
-                adapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
