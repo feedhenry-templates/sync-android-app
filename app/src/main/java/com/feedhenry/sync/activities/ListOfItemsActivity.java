@@ -56,6 +56,7 @@ public class ListOfItemsActivity extends AppCompatActivity {
     private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
 
     private RecyclerView list;
+    private FloatingActionButton fab;
     private RecyclerView collisions;
     private FHSyncClient syncClient;
 
@@ -96,7 +97,7 @@ public class ListOfItemsActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(list);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,10 +120,12 @@ public class ListOfItemsActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_list:
                     list.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.VISIBLE);
                     collisions.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_collisions:
                     list.setVisibility(View.GONE);
+                    fab.setVisibility(View.GONE);
                     collisions.setVisibility(View.VISIBLE);
                     return true;
             }
