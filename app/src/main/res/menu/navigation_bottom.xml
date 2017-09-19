@@ -16,17 +16,14 @@
     limitations under the License.
 
 -->
-<resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <string name="app_name">SyncSample</string>
-    <string name="sync_demo_title">Sync Demo</string>
-    <string name="cancel">Cancel</string>
-    <string name="test">Test</string>
-    <string name="save">Save</string>
-    <string name="item_name_hint">Name of the item</string>
-    <string name="feedhenry_logo">Feedhenry Logo</string>
-    <string name="new_item">New item</string>
-    <string name="edit_item">Edit item</string>
-    <string name="title_nav_list">List</string>
-    <string name="title_nav_collisions">Collisions</string>
-</resources>
+    <item
+        android:id="@+id/navigation_list"
+        android:title="@string/title_nav_list" />
+
+    <item
+        android:id="@+id/navigation_collisions"
+        android:title="@string/title_nav_collisions" />
+
+</menu>

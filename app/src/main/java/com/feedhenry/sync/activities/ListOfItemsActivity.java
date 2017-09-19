@@ -17,6 +17,7 @@ package com.feedhenry.sync.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,8 +25,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -34,6 +37,7 @@ import com.feedhenry.sdk.sync.FHSyncConfig;
 import com.feedhenry.sdk.sync.FHSyncListener;
 import com.feedhenry.sdk.sync.NotificationMessage;
 import com.feedhenry.sync.R;
+import com.feedhenry.sync.adapter.CollisionItemAdapter;
 import com.feedhenry.sync.adapter.ShoppingItemAdapter;
 import com.feedhenry.sync.helper.SwipeTouchHelper;
 import com.feedhenry.sync.listener.RecyclerItemClickListener;
@@ -50,9 +54,12 @@ public class ListOfItemsActivity extends AppCompatActivity {
     private static final String TAG = "FHSyncActivity";
     private static final String DATA_ID = "myShoppingList";
 
-    private ShoppingItemAdapter adapter = new ShoppingItemAdapter();
+    private ShoppingItemAdapter listAdapter = new ShoppingItemAdapter();
+    private CollisionItemAdapter collisionAdapter = new CollisionItemAdapter();
 
     private RecyclerView list;
+    private FloatingActionButton fab;
+    private RecyclerView collisions;
     private FHSyncClient syncClient;
 
     @Override
@@ -63,18 +70,35 @@ public class ListOfItemsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation_bottom);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(adapter);
+        list.setAdapter(listAdapter);
         list.addOnItemTouchListener(new RecyclerItemClickListener(
                 getApplicationContext(),
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        showPopup(adapter.getItem(position));
+                        showPopup(listAdapter.getItem(position));
                     }
                 }
         ));
+
+        collisions = findViewById(R.id.collisions);
+        collisions.setLayoutManager(new LinearLayoutManager(this));
+        collisions.setAdapter(collisionAdapter);
+        list.addOnItemTouchListener(new RecyclerItemClickListener(
+                getApplicationContext(),
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(getApplicationContext(), "Collision item pressed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ));
+
 
         SwipeTouchHelper callback = new SwipeTouchHelper(new SwipeTouchHelper.OnItemSwipeListener() {
             @Override
@@ -85,7 +109,7 @@ public class ListOfItemsActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(list);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +123,27 @@ public class ListOfItemsActivity extends AppCompatActivity {
         super.onStart();
         fireSync();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_list:
+                    list.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.VISIBLE);
+                    collisions.setVisibility(View.GONE);
+                    return true;
+                case R.id.navigation_collisions:
+                    list.setVisibility(View.GONE);
+                    fab.setVisibility(View.GONE);
+                    collisions.setVisibility(View.VISIBLE);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void fireSync() {
 
@@ -118,7 +163,7 @@ public class ListOfItemsActivity extends AppCompatActivity {
         syncClient.init(getApplicationContext(), config, new FHSyncListener() {
 
             @Override
-            //On sync complete, list all the data and update the adapter
+            //On sync complete, list all the data and update the listAdapter
             public void onSyncCompleted(NotificationMessage pMessage) {
                 Log.d(TAG, "syncClient - onSyncCompleted");
                 Log.d(TAG, "Sync message: " + pMessage.getMessage());
@@ -140,10 +185,10 @@ public class ListOfItemsActivity extends AppCompatActivity {
                     itemsToSync.add(item);
                 }
 
-                adapter.removeMissingItemsFrom(itemsToSync);
-                adapter.addNewItemsFrom(itemsToSync);
+                listAdapter.removeMissingItemsFrom(itemsToSync);
+                listAdapter.addNewItemsFrom(itemsToSync);
 
-                adapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -168,10 +213,10 @@ public class ListOfItemsActivity extends AppCompatActivity {
                     itemsToSync.add(item);
                 }
 
-                adapter.removeMissingItemsFrom(itemsToSync);
-                adapter.addNewItemsFrom(itemsToSync);
+                listAdapter.removeMissingItemsFrom(itemsToSync);
+                listAdapter.addNewItemsFrom(itemsToSync);
 
-                adapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
