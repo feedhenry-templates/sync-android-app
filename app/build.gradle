@@ -5,19 +5,15 @@ plugins {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.feedhenry.helloworld"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
-        jackOptions {
-            enabled true
-        }
     }
 
     compileOptions {
@@ -47,10 +43,15 @@ license {
     strictCheck true
 }
 
+ext {
+    android_support_library = "26.1.0"
+}
+
+
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.feedhenry:fh-android-sdk:3.3.3'
-    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
+    implementation "com.android.support:appcompat-v7:$android_support_library"
+    implementation "com.android.support:recyclerview-v7:$android_support_library"
+    implementation "com.android.support:design:$android_support_library"
+    implementation 'com.feedhenry:fh-android-sdk:4.0.0'
+    implementation 'com.afollestad.material-dialogs:core:0.9.0.1'
 }
