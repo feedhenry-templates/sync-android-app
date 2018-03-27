@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <licenseSummary>
     <project>sync-android-app</project>
-    <version>0.0.1</version>
+    <version>0.0.0</version>
     <license>Apache-2.0</license>
     <dependencies>
         <dependency>
